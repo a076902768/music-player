@@ -1,64 +1,61 @@
 <template>
   <div class="upper-pannel__music-controller">
-    <div class="button-container">
-      <a-button shape="circle">
-        <template #icon>
-          <step-backward-outlined />
-        </template>
-      </a-button>
-      <a-button shape="circle">
-        <template #icon>
-          <double-left-outlined />
-        </template>
-      </a-button>
-      <a-button shape="circle">
-        <template #icon>
-          <caret-right-outlined />
-        </template>
-      </a-button>
-      <a-button shape="circle">
-        <template #icon>
-          <double-right-outlined />
-        </template>
-      </a-button>
-      <a-button shape="circle">
-        <template #icon>
-          <step-forward-outlined />
-        </template>
-      </a-button>
-      <a-button shape="circle">
-        <template #icon>
-          <upload-outlined />
-        </template>
-      </a-button>
+    <a-slider v-model="time" :min="0" :max="1" :step="0.01" />
+    <div class="upper-pannel__music-controller--upper">
+      <div class="button-controller">
+        <a-button shape="circle">
+          <template #icon>
+            <step-backward-outlined />
+          </template>
+        </a-button>
+        <a-button shape="circle">
+          <template #icon>
+            <caret-right-outlined />
+          </template>
+        </a-button>
+        <a-button shape="circle">
+          <template #icon>
+            <step-forward-outlined />
+          </template>
+        </a-button>
+        <a-button shape="circle">
+          <template #icon>
+            <upload-outlined />
+          </template>
+        </a-button>
+      </div>
+      <div class="voice-controller">
+        <sound-filled />
+        <div class="voice-controller__slider">
+          <a-slider v-model="music" :min="0" :max="1" :step="0.01" />
+        </div>
+      </div>
     </div>
-    <a-slider v-model="inputValue" :min="0" :max="1" :step="0.01" />
   </div>
 </template>
 <script>
 import { defineComponent, ref } from 'vue'
 import {
   StepBackwardOutlined,
-  DoubleLeftOutlined,
   CaretRightOutlined,
-  DoubleRightOutlined,
   StepForwardOutlined,
-  UploadOutlined
+  UploadOutlined,
+  SoundFilled
 } from '@ant-design/icons-vue'
 
 export default defineComponent({
   components: {
     StepBackwardOutlined,
-    DoubleLeftOutlined,
     CaretRightOutlined,
-    DoubleRightOutlined,
     StepForwardOutlined,
-    UploadOutlined
+    UploadOutlined,
+    SoundFilled
   },
   setup () {
-    const inputValue = ref(0.5)
+    const time = ref(0.5)
+    const music = ref(0.5)
 
-    return { inputValue }
+    return { time, music }
   }
 })
 </script>
@@ -66,16 +63,33 @@ export default defineComponent({
 <style lang="scss" scoped>
   .upper-pannel__music-controller {
     width: 100%;
+
+    &--upper {
+      display: flex;
+      align-items: center;
+      padding: 2% 0;
+    }
   }
 
-  .button-container {
+  .button-controller {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 2% 4%;
+    justify-content: space-evenly;
+    flex-basis: 60%;
   }
 
-  /deep/ .ant-btn {
+  .voice-controller {
+    display: flex;
+    align-items: center;
+    flex-basis: 40%;
+    gap: 0.5rem;
+
+    &__slider {
+      width: 100%;
+    }
+  }
+
+  :deep(.ant-btn) {
     &-icon-only {
       width: 1.8rem;
       height: 1.8rem;
@@ -91,7 +105,7 @@ export default defineComponent({
         border-color: #8EADE2;
       }
 
-      &:nth-child(3) {
+      &:nth-child(2) {
         width: 2.5rem;
         height: 2.5rem;
 
@@ -115,6 +129,30 @@ export default defineComponent({
 
     .anticon {
       font-size: 0.75rem;
+    }
+  }
+
+  :deep(.ant-slider) {
+    &-rail {
+      background-color: #545784;
+    }
+
+    &-track {
+      background-color: #75B7EC;
+    }
+
+    &-handle {
+      border: solid 0.1rem #333;
+      background-image: radial-gradient(#25238C, #372C7D, #6D5CAE, #8EADE2, #fff);
+    }
+
+    &-handle.ant-tooltip-open {
+      border-color: #8EADE2;
+      background-image: radial-gradient(#25238C, #372C7D, #6D5CAE, #8EADE2, #fff);
+    }
+
+    &:hover .ant-slider-rail {
+      background-color: #545784;
     }
   }
 </style>
