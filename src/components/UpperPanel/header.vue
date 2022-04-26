@@ -6,11 +6,11 @@
 </template>
 <script>
 import { defineComponent } from 'vue'
-import { musicInfo } from '@/store/music'
+import { musicInfo, currentTime } from '@/store/music'
 
 export default defineComponent({
   setup () {
-    return { musicInfo }
+    return { musicInfo, currentTime }
   }
 })
 

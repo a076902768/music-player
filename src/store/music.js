@@ -1,5 +1,5 @@
 // 音樂控制相關邏輯及相關音樂變數寫在此
-import { reactive, onMounted } from 'vue'
+import { reactive, onMounted, computed } from 'vue'
 
 const musicInfo = reactive({
   audio: new Audio(),
@@ -7,6 +7,14 @@ const musicInfo = reactive({
   timer: undefined,
   currentTime: 0
 })
+
+const currentTime = computed(() => {
+  return `${time(musicInfo.currentTime)}`
+})
+
+const time = (currentTime) => {
+  return Math.floor(currentTime)
+}
 
 const startTime = () => {
   musicInfo.timer = setInterval(() => {
@@ -52,6 +60,7 @@ onMounted(() => {
 
 export {
   musicInfo,
+  currentTime,
   playSong,
   pauseSong,
   nextSong,
