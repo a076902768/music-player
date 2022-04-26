@@ -1,9 +1,20 @@
 <template>
   <div class="upper-pannel__header">
     <div class="upper-pannel__header__title">web</div>
-    <div class="upper-pannel__header__timer">00:00</div>
+    <div class="upper-pannel__header__timer">{{ musicInfo.currentTime }}</div>
   </div>
 </template>
+<script>
+import { defineComponent } from 'vue'
+import { musicInfo } from '@/store/music'
+
+export default defineComponent({
+  setup () {
+    return { musicInfo }
+  }
+})
+
+</script>
 
 <style lang="scss" scoped>
 .upper-pannel__header {

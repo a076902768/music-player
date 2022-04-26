@@ -8,9 +8,14 @@
             <step-backward-outlined />
           </template>
         </a-button>
-        <a-button shape="circle">
+        <a-button shape="circle" v-if="musicInfo.paused" @click="playSong">
           <template #icon>
             <caret-right-outlined />
+          </template>
+        </a-button>
+        <a-button shape="circle" v-else @click="pauseSong">
+          <template #icon>
+            <pause-outlined  />
           </template>
         </a-button>
         <a-button shape="circle">
@@ -40,8 +45,10 @@ import {
   CaretRightOutlined,
   StepForwardOutlined,
   UploadOutlined,
-  SoundFilled
+  SoundFilled,
+  PauseOutlined
 } from '@ant-design/icons-vue'
+import { musicInfo, playSong, pauseSong } from '@/store/music'
 
 export default defineComponent({
   components: {
@@ -49,13 +56,15 @@ export default defineComponent({
     CaretRightOutlined,
     StepForwardOutlined,
     UploadOutlined,
-    SoundFilled
+    SoundFilled,
+    PauseOutlined
   },
   setup () {
     const time = ref(0.5)
     const music = ref(0.5)
+    musicInfo.audio.src = require('@/assets/test.mp3')
 
-    return { time, music }
+    return { time, music, playSong, pauseSong, musicInfo }
   }
 })
 </script>

@@ -1,25 +1,56 @@
 // 音樂控制相關邏輯及相關音樂變數寫在此
-import { reactive } from 'vue'
+import { reactive, onMounted } from 'vue'
 
 const musicInfo = reactive({
-
+  audio: new Audio(),
+  paused: true, // 是否為暫停狀態
+  timer: undefined,
+  currentTime: 0
 })
 
-const playSong = () => {}
+const startTime = () => {
+  musicInfo.timer = setInterval(() => {
+    musicInfo.currentTime = musicInfo.audio.currentTime
+  }, 10)
+}
 
-const pauseSong = () => {}
+const stopTime = () => {
+  clearInterval(musicInfo.timer)
+}
 
-const nextSong = () => {}
+const playSong = () => {
+  musicInfo.audio.play()
+  setPaused()
+  startTime()
+}
 
-const previousSong = () => {}
+const pauseSong = () => {
+  musicInfo.audio.pause()
+  setPaused()
+  stopTime()
+}
 
-const controlAudioVol = () => {}
+const setPaused = () => {
+  musicInfo.paused = musicInfo.audio.paused
+}
 
-const controlAudioTime = () => {}
+const nextSong = () => { }
 
-const uploadSong = () => {}
+const previousSong = () => { }
 
-export default {
+const controlAudioVol = () => { }
+
+const controlAudioTime = () => { }
+
+const uploadSong = (url) => {
+  musicInfo.audio.src = require(`${url}`)
+}
+
+onMounted(() => {
+  setPaused()
+})
+
+export {
   musicInfo,
   playSong,
   pauseSong,
