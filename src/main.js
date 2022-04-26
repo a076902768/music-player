@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import App from './App.vue'
+import App from './layouts'
 import router from './router'
 import store from './store'
 import { Slider, Button } from 'ant-design-vue'
