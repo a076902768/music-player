@@ -23,11 +23,20 @@
             <step-forward-outlined />
           </template>
         </a-button>
-        <a-button shape="circle">
-          <template #icon>
-            <upload-outlined />
-          </template>
-        </a-button>
+        <a-upload
+          v-model:file-list="musicList"
+          name="file"
+          :multiple="true"
+          :show-upload-list="false"
+          :customRequest="upLoadFiles"
+          @change="handleChange"
+        >
+          <a-button shape="circle">
+            <template #icon>
+              <upload-outlined />
+            </template>
+          </a-button>
+        </a-upload>
       </div>
       <div class="voice-controller">
         <sound-filled />
@@ -48,7 +57,7 @@ import {
   SoundFilled,
   PauseOutlined
 } from '@ant-design/icons-vue'
-import { musicInfo, playSong, pauseSong } from '@/store/music'
+import { musicInfo, musicList, playSong, pauseSong } from '@/store/music'
 
 export default defineComponent({
   components: {
@@ -62,9 +71,18 @@ export default defineComponent({
   setup () {
     const time = ref(0.5)
     const music = ref(0.5)
+
     musicInfo.audio.src = require('@/assets/test.mp3')
 
-    return { time, music, playSong, pauseSong, musicInfo }
+    const upLoadFiles = ({ onSuccess, onError, file }) => {
+      console.log(file)
+    }
+
+    const handleChange = (info) => {
+      console.log(info)
+    }
+
+    return { time, music, playSong, pauseSong, musicInfo, musicList, upLoadFiles, handleChange }
   }
 })
 </script>
@@ -114,7 +132,7 @@ export default defineComponent({
         border-color: #8EADE2;
       }
 
-      &:nth-child(2) {
+      &:nth-last-child(3):nth-child(2) {
         width: 2.5rem;
         height: 2.5rem;
 
