@@ -8,7 +8,7 @@
             <step-backward-outlined />
           </template>
         </a-button>
-        <a-button shape="circle" v-if="musicInfo.paused" @click="playSong">
+        <a-button :disabled="!musicList.length" shape="circle" v-if="musicInfo.paused" @click="playSong">
           <template #icon>
             <caret-right-outlined />
           </template>
@@ -24,7 +24,6 @@
           </template>
         </a-button>
         <a-upload
-          v-model:file-list="musicList"
           name="file"
           :multiple="true"
           :show-upload-list="false"
@@ -72,10 +71,8 @@ export default defineComponent({
     const time = ref(0.5)
     const music = ref(0.5)
 
-    musicInfo.audio.src = require('@/assets/test.mp3')
-
-    const upLoadFiles = ({ onSuccess, onError, file }) => {
-      console.log(file)
+    const upLoadFiles = async ({ onSuccess, onError, file }) => {
+      musicList.push(file)
     }
 
     const handleChange = (info) => {

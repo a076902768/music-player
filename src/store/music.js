@@ -1,14 +1,21 @@
 // 音樂控制相關邏輯及相關音樂變數寫在此
-import { reactive, onMounted, ref } from 'vue'
+import { reactive, onMounted, watch } from 'vue'
 
 const musicInfo = reactive({
-  audio: new Audio(),
+  audio: null,
   paused: true, // 是否為暫停狀態
   timer: undefined,
   currentTime: 0
 })
 
-const musicList = ref([])
+const musicList = reactive([])
+
+watch(musicList, () => {
+  if (!musicInfo.audio) {
+    musicInfo.audio = new Audio()
+    musicInfo.audio.src = URL.createObjectURL(musicList[0])
+  }
+})
 
 const startTime = () => {
   musicInfo.timer = setInterval(() => {
@@ -49,7 +56,7 @@ const uploadSong = (url) => {
 }
 
 onMounted(() => {
-  setPaused()
+  // setPaused()
 })
 
 export {
