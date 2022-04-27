@@ -1,7 +1,7 @@
 <template>
-  <div class="upper-pannel__music-controller">
+  <div class="upper-panel__music-controller">
     <a-slider v-model="time" :min="0" :max="1" :step="0.01" />
-    <div class="upper-pannel__music-controller--upper">
+    <div class="upper-panel__music-controller--upper">
       <div class="button-controller">
         <a-button shape="circle">
           <template #icon>
@@ -70,7 +70,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-  .upper-pannel__music-controller {
+  .upper-panel__music-controller {
     width: 100%;
 
     &--upper {

@@ -23,7 +23,7 @@ export default {
 .upper-panel {
   width: 100%;
   height: 9rem;
-  background-image: linear-gradient(to bottom, $upper-pannel-background-color1, $upper-pannel-background-color2);
+  background-image: linear-gradient(to bottom, $upper-panel-background-color1, $upper-panel-background-color2);
   border-radius: $main-radius;
   padding: 2%;
   box-sizing: border-box;
