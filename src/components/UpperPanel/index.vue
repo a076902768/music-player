@@ -22,7 +22,7 @@ export default {
 <style lang="scss" scoped>
 .upper-panel {
   width: 100%;
-  height: 9rem;
+  height: $upper-panel-height;
   background-image: linear-gradient(to bottom, $upper-panel-background-color1, $upper-panel-background-color2);
   border-radius: $main-radius;
   padding: 2%;
