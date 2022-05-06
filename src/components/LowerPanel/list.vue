@@ -5,7 +5,7 @@
         {{ music.name }}
       </div>
       <div class="music__duration">
-        {{ music.duration }}
+        {{ Helper.timeFormat(music.audio.duration) }}
       </div>
       </div>
   </div>
@@ -14,10 +14,11 @@
 <script>
 import { defineComponent } from 'vue'
 import { musicList } from '@/store/music'
+import Helper from '@/assets/js/utils/helper'
 
 export default defineComponent({
   setup () {
-    return { musicList }
+    return { musicList, Helper }
   }
 })
 </script>
