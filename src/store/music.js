@@ -12,8 +12,7 @@ const musicList = reactive([])
 
 watch(musicList, () => {
   if (!musicInfo.audio) {
-    musicInfo.audio = new Audio()
-    musicInfo.audio.src = URL.createObjectURL(musicList[0])
+    musicInfo.audio = musicList[0].audio
   }
 })
 

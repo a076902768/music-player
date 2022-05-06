@@ -71,12 +71,33 @@ export default defineComponent({
     const time = ref(0.5)
     const music = ref(0.5)
 
-    const upLoadFiles = async ({ onSuccess, onError, file }) => {
-      musicList.push(file)
+    const upLoadFiles = async ({ file }) => {
+      // const audio = new Audio()
+      // audio.src = URL.createObjectURL(file)
+      // audio.addEventListener('loadstart', test)
     }
 
     const handleChange = (info) => {
       console.log(info)
+      info.fileList.forEach((e) => {
+        let timer = null
+        const test = () => {
+          timer = setInterval(() => {
+            if (audio.readyState !== 0) {
+              console.log(audio.duration, audio.readyState)
+              audio.removeEventListener('loadstart', test)
+              if (!musicList.find((mus) => mus.uid === e.uid)) {
+                e.audio = audio
+                musicList.push(e)
+              }
+              clearInterval(timer)
+            }
+          }, 10)
+        }
+        const audio = new Audio()
+        audio.src = URL.createObjectURL(e.originFileObj)
+        audio.addEventListener('loadstart', test)
+      })
     }
 
     return { time, music, playSong, pauseSong, musicInfo, musicList, upLoadFiles, handleChange }
