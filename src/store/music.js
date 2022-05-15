@@ -3,6 +3,7 @@ import { reactive, onMounted, watch } from 'vue'
 
 const musicInfo = reactive({
   audio: null,
+  name: 'music-player',
   paused: true, // 是否為暫停狀態
   timer: undefined,
   currentTime: 0
@@ -12,9 +13,14 @@ const musicList = reactive([])
 
 watch(musicList, () => {
   if (!musicInfo.audio) {
-    musicInfo.audio = musicList[0].audio
+    setMusic()
   }
 })
+
+const setMusic = () => {
+  musicInfo.audio = musicList[0].audio
+  musicInfo.name = musicList[0].name
+}
 
 const startTime = () => {
   musicInfo.timer = setInterval(() => {

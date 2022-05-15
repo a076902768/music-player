@@ -1,6 +1,6 @@
 <template>
   <div class="upper-panel__header">
-    <div class="upper-panel__header__title">web</div>
+    <div class="upper-panel__header__title">{{musicInfo?.name}}</div>
     <div class="upper-panel__header__timer">{{ currentTime }}</div>
   </div>
 </template>

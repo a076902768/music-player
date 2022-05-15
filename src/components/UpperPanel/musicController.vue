@@ -77,27 +77,24 @@ export default defineComponent({
       // audio.addEventListener('loadstart', test)
     }
 
-    const handleChange = (info) => {
-      console.log(info)
-      info.fileList.forEach((e) => {
-        let timer = null
-        const test = () => {
-          timer = setInterval(() => {
-            if (audio.readyState !== 0) {
-              console.log(audio.duration, audio.readyState)
-              audio.removeEventListener('loadstart', test)
-              if (!musicList.find((mus) => mus.uid === e.uid)) {
-                e.audio = audio
-                musicList.push(e)
-              }
-              clearInterval(timer)
-            }
-          }, 10)
-        }
-        const audio = new Audio()
-        audio.src = URL.createObjectURL(e.originFileObj)
-        audio.addEventListener('loadstart', test)
-      })
+    const handleChange = ({ file }) => {
+      console.log(file)
+      if (musicList.find((e) => e?.uid === file.uid)) return
+
+      let timer = null
+      const saveAudioFile = () => {
+        timer = setInterval(() => {
+          if (!audio.readyState) return
+
+          audio.removeEventListener('loadstart', saveAudioFile)
+          file.audio = audio
+          musicList.push(file)
+          clearInterval(timer)
+        }, 10)
+      }
+      const audio = new Audio()
+      audio.src = URL.createObjectURL(file.originFileObj)
+      audio.addEventListener('loadstart', saveAudioFile)
     }
 
     return { time, music, playSong, pauseSong, musicInfo, musicList, upLoadFiles, handleChange }
