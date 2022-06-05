@@ -1,6 +1,13 @@
 <template>
   <div class="upper-panel__music-controller">
-    <a-slider v-model="time" :min="0" :max="1" :step="0.01" />
+    <a-slider
+      v-model:value="musicInfo.timePercentage"
+      :min="0"
+      :max="1"
+      :step="0.01"
+      @afterChange="onAfterChange"
+      @change="timeChange"
+    />
     <div class="upper-panel__music-controller--upper">
       <div class="button-controller">
         <a-button shape="circle">
@@ -40,14 +47,20 @@
       <div class="voice-controller">
         <sound-filled />
         <div class="voice-controller__slider">
-          <a-slider v-model="music" :min="0" :max="1" :step="0.01" />
+          <a-slider
+          v-model:value="musicInfo.volume"
+          :min="0"
+          :max="1"
+          :step="0.01"
+          @change="voiceChange"
+          />
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import {
   StepBackwardOutlined,
   CaretRightOutlined,
@@ -68,9 +81,6 @@ export default defineComponent({
     PauseOutlined
   },
   setup () {
-    const time = ref(0.5)
-    const music = ref(0.5)
-
     const upLoadFiles = async ({ file }) => {
       // const audio = new Audio()
       // audio.src = URL.createObjectURL(file)
@@ -97,7 +107,29 @@ export default defineComponent({
       audio.addEventListener('loadstart', saveAudioFile)
     }
 
-    return { time, music, playSong, pauseSong, musicInfo, musicList, upLoadFiles, handleChange }
+    const onAfterChange = () => playSong()
+
+    const timeChange = (percentage) => {
+      pauseSong()
+      musicInfo.audio.currentTime = musicInfo.audio.duration * percentage
+    }
+
+    const voiceChange = (volume) => {
+      musicInfo.audio.volume = volume
+      musicInfo.volume = volume
+    }
+
+    return {
+      playSong,
+      pauseSong,
+      musicInfo,
+      musicList,
+      upLoadFiles,
+      handleChange,
+      timeChange,
+      onAfterChange,
+      voiceChange
+    }
   }
 })
 </script>

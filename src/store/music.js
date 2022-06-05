@@ -6,7 +6,9 @@ const musicInfo = reactive({
   name: 'music-player',
   paused: true, // 是否為暫停狀態
   timer: undefined,
-  currentTime: 0
+  timePercentage: 0.00,
+  currentTime: 0,
+  volume: 0
 })
 
 const musicList = reactive([])
@@ -17,13 +19,15 @@ watch(musicList, () => {
   }
 })
 
-const setMusic = () => {
-  musicInfo.audio = musicList[0].audio
-  musicInfo.name = musicList[0].name
+const setMusic = (index = 0) => {
+  musicInfo.name = musicList[index].name
+  musicInfo.audio = musicList[index].audio
+  musicInfo.volume = musicList[index].audio.volume
 }
 
 const startTime = () => {
   musicInfo.timer = setInterval(() => {
+    musicInfo.timePercentage = musicInfo.audio.currentTime / musicInfo.audio.duration
     musicInfo.currentTime = musicInfo.audio.currentTime
   }, 10)
 }
