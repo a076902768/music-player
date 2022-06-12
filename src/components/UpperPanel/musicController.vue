@@ -6,7 +6,7 @@
       :max="1"
       :step="0.01"
       @afterChange="onAfterChange"
-      @change="timeChange"
+      @change="controlAudioTime"
     />
     <div class="upper-panel__music-controller--upper">
       <div class="button-controller">
@@ -52,7 +52,7 @@
           :min="0"
           :max="1"
           :step="0.01"
-          @change="voiceChange"
+          @change="controlAudioVol"
           />
         </div>
       </div>
@@ -69,7 +69,7 @@ import {
   SoundFilled,
   PauseOutlined
 } from '@ant-design/icons-vue'
-import { musicInfo, musicList, playSong, pauseSong } from '@/store/music'
+import { musicInfo, musicList, playSong, pauseSong, controlAudioTime, controlAudioVol } from '@/store/music'
 
 export default defineComponent({
   components: {
@@ -81,11 +81,7 @@ export default defineComponent({
     PauseOutlined
   },
   setup () {
-    const upLoadFiles = async ({ file }) => {
-      // const audio = new Audio()
-      // audio.src = URL.createObjectURL(file)
-      // audio.addEventListener('loadstart', test)
-    }
+    const upLoadFiles = async () => {}
 
     const handleChange = ({ file }) => {
       console.log(file)
@@ -109,26 +105,16 @@ export default defineComponent({
 
     const onAfterChange = () => playSong()
 
-    const timeChange = (percentage) => {
-      pauseSong()
-      musicInfo.audio.currentTime = musicInfo.audio.duration * percentage
-    }
-
-    const voiceChange = (volume) => {
-      musicInfo.audio.volume = volume
-      musicInfo.volume = volume
-    }
-
     return {
       playSong,
       pauseSong,
+      controlAudioTime,
+      controlAudioVol,
       musicInfo,
       musicList,
       upLoadFiles,
       handleChange,
-      timeChange,
-      onAfterChange,
-      voiceChange
+      onAfterChange
     }
   }
 })
