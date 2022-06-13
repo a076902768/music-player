@@ -45,7 +45,10 @@
         </a-upload>
       </div>
       <div class="voice-controller">
-        <sound-filled />
+        <sound-filled
+         :class="{mute: musicInfo.volume === 0}"
+         @click="controlAudioVol(audioVolume)"
+         />
         <div class="voice-controller__slider">
           <a-slider
           v-model:value="musicInfo.volume"
@@ -60,7 +63,7 @@
   </div>
 </template>
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import {
   StepBackwardOutlined,
   CaretRightOutlined,
@@ -81,6 +84,8 @@ export default defineComponent({
     PauseOutlined
   },
   setup () {
+    const audioVolume = computed(() => musicInfo.volume ? 0 : 0.5)
+
     const upLoadFiles = async () => {}
 
     const handleChange = ({ file }) => {
@@ -114,6 +119,7 @@ export default defineComponent({
       controlAudioVol,
       musicInfo,
       musicList,
+      audioVolume,
       upLoadFiles,
       handleChange,
       onAfterChange
@@ -148,6 +154,25 @@ export default defineComponent({
 
     &__slider {
       width: 100%;
+    }
+
+    .anticon {
+      &-sound.mute {
+        position: relative;
+        cursor: pointer;
+
+        &::after {
+          position: absolute;
+          top: 50%;
+          left: -25%;
+          width: 141.4%;
+          height: 0.1rem;
+          background-color: red;
+          transform-origin: center;
+          transform: rotate(45deg) translateY(-50%);
+          content: '';
+        }
+      }
     }
   }
 
