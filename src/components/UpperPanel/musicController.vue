@@ -10,7 +10,7 @@
     />
     <div class="upper-panel__music-controller--upper">
       <div class="button-controller">
-        <a-button shape="circle">
+        <a-button shape="circle" @click="previousSong">
           <template #icon>
             <step-backward-outlined />
           </template>
@@ -25,7 +25,7 @@
             <pause-outlined  />
           </template>
         </a-button>
-        <a-button shape="circle">
+        <a-button shape="circle" @click="nextSong">
           <template #icon>
             <step-forward-outlined />
           </template>
@@ -69,7 +69,7 @@ import {
   SoundFilled,
   PauseOutlined
 } from '@ant-design/icons-vue'
-import { musicInfo, musicList, playSong, pauseSong, controlAudioTime, controlAudioVol } from '@/store/music'
+import { musicInfo, musicList, playSong, pauseSong, previousSong, nextSong, controlAudioTime, controlAudioVol } from '@/store/music'
 
 export default defineComponent({
   components: {
@@ -108,6 +108,8 @@ export default defineComponent({
     return {
       playSong,
       pauseSong,
+      previousSong,
+      nextSong,
       controlAudioTime,
       controlAudioVol,
       musicInfo,
