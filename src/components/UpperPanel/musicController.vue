@@ -178,20 +178,6 @@ export default defineComponent({
 
   :deep(.ant-btn) {
     &-icon-only {
-      width: 1.8rem;
-      height: 1.8rem;
-      min-width: unset;
-      border: solid 0.2rem #333;
-      box-sizing: border-box;
-      color: #fff;
-      background-image: radial-gradient(#25238C, #372C7D, #6D5CAE, #8EADE2, #fff);
-
-      &:hover {
-        color: #fff;
-        background-image: radial-gradient(#25238C, #372C7D, #6D5CAE, #8EADE2, #fff);
-        border-color: #8EADE2;
-      }
-
       &:nth-last-child(3):nth-child(2) {
         width: 2.5rem;
         height: 2.5rem;
@@ -200,22 +186,6 @@ export default defineComponent({
           font-size: 1.75rem;
         }
       }
-    }
-
-    &[disabled] {
-      color: #fff;
-      background-image: radial-gradient(#817BBA, #A9A0CD, #ADA5CF, #B9B0D4, #fff);
-        border-color: #333;
-
-        &:hover {
-          color: #fff;
-          background-image: radial-gradient(#817BBA, #A9A0CD, #ADA5CF, #B9B0D4, #fff);
-        border-color: #333;
-        }
-    }
-
-    .anticon {
-      font-size: 0.75rem;
     }
   }
 
