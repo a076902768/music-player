@@ -25,7 +25,7 @@
             <pause-outlined  />
           </template>
         </a-button>
-        <a-button shape="circle" @click="nextSong">
+        <a-button shape="circle" @click="nextSong()">
           <template #icon>
             <step-forward-outlined />
           </template>

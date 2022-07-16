@@ -52,7 +52,7 @@ const setMusicInfo = (pos = 0) => {
 const musicSetIntervalService = () => {
   musicInfo.timer = setInterval(() => {
     if (audioIsEnded()) {
-      checkPlaybackModeService()
+      nextSong(true)
     }
     musicInfo.timePercentage = musicInfo.audio.currentTime / musicInfo.audio.duration
     musicInfo.currentTime = musicInfo.audio.currentTime
@@ -92,13 +92,31 @@ const setPaused = () => {
 }
 
 /** 下一首 */
-const nextSong = () => {
-  const pos = getMusicPos(musicInfo.uid)
-  if (pos === musicList.length - 1) {
-    changeMusic(0)
+const nextSong = (audioIsEnded = false) => {
+  if (musicInfo.playbackMode === PlaybackModeEnum.LOOP.name || (musicInfo.playbackMode === PlaybackModeEnum.SINGLE_LOOP.name && !audioIsEnded)) {
+    const pos = getMusicPos(musicInfo.uid)
+    if (pos === musicList.length - 1) {
+      changeMusic(0)
+      return
+    }
+    changeMusic(pos + 1)
     return
   }
-  changeMusic(pos + 1)
+
+  if (musicInfo.playbackMode === PlaybackModeEnum.SINGLE_LOOP.name) {
+    const pos = getMusicPos(musicInfo.uid)
+    changeMusic(pos)
+    return
+  }
+
+  if (musicInfo.playbackMode === PlaybackModeEnum.SHUFFLE.name) {
+    let random = Helper.getRandomInt(musicList.length)
+    while (musicInfo.uid === musicList[random].uid) {
+      random = Helper.getRandomInt(musicList.length)
+    }
+    const randomPos = getMusicPos(musicList[random].uid)
+    changeMusic(randomPos)
+  }
 }
 
 /** 上一首 */
@@ -121,25 +139,6 @@ const controlAudioVol = (volume) => {
 const controlAudioTime = (percentage) => {
   pauseSong()
   musicInfo.audio.currentTime = musicInfo.audio.duration * percentage
-}
-
-/** 確認當前撥放模式 並依照當前模式執行相對應的邏輯 */
-const checkPlaybackModeService = () => {
-  if (musicInfo.playbackMode === PlaybackModeEnum.LOOP.name) {
-    nextSong()
-    return
-  }
-
-  if (musicInfo.playbackMode === PlaybackModeEnum.SINGLE_LOOP.name) {
-    const pos = getMusicPos(musicInfo.uid)
-    changeMusic(pos)
-  }
-
-  if (musicInfo.playbackMode === PlaybackModeEnum.SHUFFLE.name) {
-    const random = Helper.getRandomInt(musicList.length)
-    const randomPos = getMusicPos(musicList[random].uid)
-    changeMusic(randomPos)
-  }
 }
 
 /** 改變播放模式
