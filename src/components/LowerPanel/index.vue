@@ -2,7 +2,7 @@
   <div class="lower-panel">
     <div class="lower-panel__container">
       <Header />
-      <div class="lower-panel__container__flex-container">
+      <div class="lower-panel__container__content">
         <Collection />
         <List />
       </div>
@@ -37,8 +37,9 @@ export default {
     height: 100%;
     background-color: $main-color;
 
-    &__flex-container {
+    &__content {
       display: flex;
+      padding: 0.5rem 0.5rem 0 0.5rem;
     }
   }
 }

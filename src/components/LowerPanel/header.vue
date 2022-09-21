@@ -1,6 +1,9 @@
 <template>
   <div class="lower-panel__header">
-    <a-dropdown :trigger="['click']">
+    <a-dropdown
+      :trigger="['click']"
+      :getPopupContainer="(triggerNode) => {return triggerNode.parentNode}"
+    >
       <a class="ant-dropdown-link" @click.prevent>
         <menu-outlined />
       </a>
@@ -62,7 +65,31 @@ export default defineComponent({
 }
 
 .menu-is-active {
-  background-color: #6f97ce;
-  color: #fff;
+  font-weight: bold;
+  color: rgba(236, 252, 15, 0.993);
+}
+
+:deep(.ant-dropdown) {
+  box-shadow: 0px 2px 7px slategrey;
+
+  &-menu {
+    background-image: linear-gradient(to bottom, $upper-panel-background-color1, $upper-panel-background-color2);
+
+    &-item {
+      color: #fff;
+
+      span {
+        transition: 0.5s;
+      }
+
+      &:hover {
+        background-color: transparent;
+
+        span {
+          transform: scale(1.2);
+        }
+      }
+    }
+  }
 }
 </style>
