@@ -2,6 +2,7 @@
   <div class="upper-panel">
     <div class="upper-panel__container">
       <Header />
+      <audio-graph />
       <music-controller />
     </div>
   </div>
@@ -9,11 +10,13 @@
 
 <script>
 import Header from '@/components/UpperPanel/header'
+import AudioGraph from '@/components/UpperPanel/audioGraph'
 import MusicController from '@/components/UpperPanel/musicController'
 
 export default {
   components: {
     Header,
+    AudioGraph,
     MusicController
   }
 }
